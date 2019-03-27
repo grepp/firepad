@@ -22,11 +22,25 @@ module.exports = function (grunt) {
           cwd: 'lib/',          // Src matches are relative to this path.
           src: ['**/*.coffee'], // Actual pattern(s) to match.
           dest: 'lib/',         // Destination path prefix.
-          ext: '.js'            // Dest filepaths will have this extension.
+          ext: '.es6'            // Dest filepaths will have this extension.
         }],
         options: {
           bare: true            // Skip surrounding IIFE in compiled output.
         }
+      }
+    },
+    babel: {
+      options: {
+        presets: ['@babel/preset-env']
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'lib/',
+          src: ['**/*.es6'],
+          dest: 'lib/',
+          ext: '.js'
+        }]
       }
     },
     concat: {
@@ -129,6 +143,7 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-coffeelint');
   grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify-es');
   grunt.loadNpmTasks('grunt-contrib-copy');
@@ -137,6 +152,6 @@ module.exports = function (grunt) {
 
   // Tasks
   grunt.registerTask('test', ['karma:unit']);
-  grunt.registerTask('build', ['coffeelint', 'coffee', 'concat', 'uglify', 'copy'])
+  grunt.registerTask('build', ['coffeelint', 'coffee', 'babel', 'concat', 'uglify', 'copy'])
   grunt.registerTask('default', ['build', 'test']);
 };

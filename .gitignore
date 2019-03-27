@@ -9,6 +9,7 @@ node_modules
 
 # generated
 lib/ace-adapter.js
+lib/ace-adapter.es6
 dist/firepad.zip
 dist/
 
